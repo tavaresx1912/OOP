@@ -15,7 +15,7 @@ public class StreamingMusic {
             exibirMenu();
             opcao = lerOpcao();
             processarOpcao(opcao);
-        } while (opcao != 3);
+        } while (opcao != 0);
     }
 
     public static void exibirMenu() {
@@ -23,7 +23,10 @@ public class StreamingMusic {
         System.out.println("1. Adicionar música");
         System.out.println("2. Listar músicas");
         System.out.println("3. Buscar por Título");
-        System.out.println("4. Sair");
+        System.out.println("4. Buscar por Artista");
+        System.out.println("5. Buscar por Genero");
+        System.out.println("6. Buscar estasticas");
+        System.out.println("7. Sair");
     }
 
     public static int lerOpcao() {
@@ -39,7 +42,10 @@ public class StreamingMusic {
             case 1: adicionarMusica(); break;
             case 2: listarMusicas(); break;
             case 3: buscarPorTitulo(); break;
-            case 4: System.out.println("Saindo..."); break;
+            case 4: buscarPorArtista(); break;
+            case 5: buscarPorGenero(); break;
+            case 6: mostrarEstatisticas(); break;
+            case 7: System.out.println("Saindo..."); break;
             default: System.out.println("Opção inválida. Tente novamente.");
         }
     }
@@ -92,5 +98,50 @@ public class StreamingMusic {
         if (!encontrado) {
             System.out.println("Música não encontrada.");
         }
+    }
+
+    public static void buscarPorArtista() { /* implementar */
+        System.out.print("Digite o artista da música que deseja buscar: ");
+        String artistaBusca = sc.nextLine();
+        boolean encontrado = false;
+        for (int i = 0; i < Titulo.size(); i++) {
+            if (Artista.get(i).contains(artistaBusca)) {
+                System.out.printf("Título: %s, Artista: %s, Duração: %d segundos, Gênero: %s%n",
+                        Titulo.get(i), Artista.get(i), Duracao.get(i), Genero.get(i));
+                encontrado = true;
+            }
+        }
+        if (!encontrado) {
+            System.out.println("Música não encontrada.");
+        }
+    }
+
+    public static void buscarPorGenero() { /* implementar */
+        System.out.print("Digite o gênero da música que deseja buscar: ");
+        String generoBusca = sc.nextLine();
+        boolean encontrado = false;
+        for (int i = 0; i < Titulo.size(); i++) {
+            if (Genero.get(i).contains(generoBusca)) {
+                System.out.printf("Título: %s, Artista: %s, Duração: %d segundos, Gênero: %s%n",
+                        Titulo.get(i), Artista.get(i), Duracao.get(i), Genero.get(i));
+                encontrado = true;
+            }
+        }
+        if (!encontrado) {
+            System.out.println("Música não encontrada.");
+        }
+    }
+
+    public static void mostrarEstatisticas() { /* implementar */
+        if (Titulo.isEmpty()) {
+            System.out.println("Nenhuma música cadastrada.");
+            return;
+        }
+        int totalMusicas = Titulo.size();
+        int duracaoTotal = Duracao.stream().mapToInt(Integer::intValue).sum();
+        double duracaoMedia = (double) duracaoTotal / totalMusicas;
+        System.out.printf("Total de músicas: %d%n", totalMusicas);
+        System.out.printf("Duração total: %d segundos%n", duracaoTotal);
+        System.out.printf("Duração média: %.2f segundos%n", duracaoMedia);
     }
 }
