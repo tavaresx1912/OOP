@@ -12,7 +12,7 @@ public class StreamingMusic {
             exibirMenu();
             opcao = lerOpcao();
             processarOpcao(opcao);
-        } while (opcao != 0);
+        } while (opcao != 7);
     }
 
     static class Musica {
@@ -96,7 +96,7 @@ public class StreamingMusic {
 
     public static void buscarPorTitulo() { /* implementar */
         System.out.print("Digite o título da música que deseja buscar: ");
-        String tituloBusca = sc.nextLine();
+        String tituloBusca = sc.nextLine().toLowerCase();
         boolean encontrado = false;
         for (Musica musica : musicas) {
              if (musica.titulo.contains(tituloBusca)) {
@@ -112,7 +112,7 @@ public class StreamingMusic {
 
     public static void buscarPorArtista() { /* implementar */
         System.out.print("Digite o artista da música que deseja buscar: ");
-        String artistaBusca = sc.nextLine();
+        String artistaBusca = sc.nextLine().toLowerCase();
         boolean encontrado = false;
         for (Musica musica : musicas) {
             if (musica.artista.contains(artistaBusca)) {
@@ -128,7 +128,7 @@ public class StreamingMusic {
 
     public static void buscarPorGenero() { /* implementar */
         System.out.print("Digite o gênero da música que deseja buscar: ");
-        String generoBusca = sc.nextLine();
+        String generoBusca = sc.nextLine().toLowerCase();
         boolean encontrado = false;
         for (Musica musica : musicas) {
             if (musica.genero.contains(generoBusca)) {
