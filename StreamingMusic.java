@@ -3,10 +3,7 @@ import java.util.Scanner;
 
 public class StreamingMusic {
 
-    static ArrayList<String> Titulo = new ArrayList<>();
-    static ArrayList<String> Artista = new ArrayList<>();
-    static ArrayList<Integer> Duracao = new ArrayList<>();
-    static ArrayList<String> Genero = new ArrayList<>();
+    static ArrayList<Musica> musicas = new ArrayList<>();
     static Scanner sc = new Scanner(System.in);
 
     public static void main(String[] args) {
@@ -16,6 +13,20 @@ public class StreamingMusic {
             opcao = lerOpcao();
             processarOpcao(opcao);
         } while (opcao != 0);
+    }
+
+    static class Musica {
+        String titulo;
+        String artista;
+        int duracao;
+        String genero;
+
+        public Musica(String titulo, String artista, int duracao, String genero) {
+            this.titulo = titulo;
+            this.artista = artista;
+            this.duracao = duracao;
+            this.genero = genero;
+        }
     }
 
     public static void exibirMenu() {
@@ -36,6 +47,8 @@ public class StreamingMusic {
             return -1;
         }
     }
+
+    
 
     public static void processarOpcao(int opcao) {
         switch (opcao) {
@@ -59,11 +72,8 @@ public class StreamingMusic {
         int duracao = Integer.parseInt(sc.nextLine());
         System.out.print("Digite o gênero da música: ");
         String genero = sc.nextLine();
-        Titulo.add(titulo);
-        Artista.add(artista);
+        musicas.add(new Musica(titulo, artista, duracao, genero));
         FormatarDuracao(duracao);
-        Duracao.add(duracao);
-        Genero.add(genero);
         System.out.println("Música adicionada com sucesso!");
     }
 
@@ -74,13 +84,13 @@ public class StreamingMusic {
     }
 
     public static void listarMusicas() { /* implementar */ 
-        if (Titulo.isEmpty()) {
+        if (musicas.isEmpty()) {
             System.out.println("Nenhuma música cadastrada.");
             return;
         }
-        for (int i = 0; i < Titulo.size(); i++) {
-            System.out.printf("Título: %s, Artista: %s, Duração: %d segundos, Gênero: %s%n",
-                    Titulo.get(i), Artista.get(i), Duracao.get(i), Genero.get(i));
+        for (Musica musica : musicas) {
+             System.out.printf("Título: %s, Artista: %s, Duração: %d segundos, Gênero: %s%n",
+                    musica.titulo, musica.artista, musica.duracao, musica.genero);
         }
     }
 
@@ -88,10 +98,10 @@ public class StreamingMusic {
         System.out.print("Digite o título da música que deseja buscar: ");
         String tituloBusca = sc.nextLine();
         boolean encontrado = false;
-        for (int i = 0; i < Titulo.size(); i++) {
-            if (Titulo.get(i).contains(tituloBusca)) {
+        for (Musica musica : musicas) {
+             if (musica.titulo.contains(tituloBusca)) {
                 System.out.printf("Título: %s, Artista: %s, Duração: %d segundos, Gênero: %s%n",
-                        Titulo.get(i), Artista.get(i), Duracao.get(i), Genero.get(i));
+                        musica.titulo, musica.artista, musica.duracao, musica.genero);
                 encontrado = true;
             }
         }
@@ -104,10 +114,10 @@ public class StreamingMusic {
         System.out.print("Digite o artista da música que deseja buscar: ");
         String artistaBusca = sc.nextLine();
         boolean encontrado = false;
-        for (int i = 0; i < Titulo.size(); i++) {
-            if (Artista.get(i).contains(artistaBusca)) {
+        for (Musica musica : musicas) {
+            if (musica.artista.contains(artistaBusca)) {
                 System.out.printf("Título: %s, Artista: %s, Duração: %d segundos, Gênero: %s%n",
-                        Titulo.get(i), Artista.get(i), Duracao.get(i), Genero.get(i));
+                        musica.titulo, musica.artista, musica.duracao, musica.genero);
                 encontrado = true;
             }
         }
@@ -120,10 +130,10 @@ public class StreamingMusic {
         System.out.print("Digite o gênero da música que deseja buscar: ");
         String generoBusca = sc.nextLine();
         boolean encontrado = false;
-        for (int i = 0; i < Titulo.size(); i++) {
-            if (Genero.get(i).contains(generoBusca)) {
+        for (Musica musica : musicas) {
+            if (musica.genero.contains(generoBusca)) {
                 System.out.printf("Título: %s, Artista: %s, Duração: %d segundos, Gênero: %s%n",
-                        Titulo.get(i), Artista.get(i), Duracao.get(i), Genero.get(i));
+                        musica.titulo, musica.artista, musica.duracao, musica.genero);
                 encontrado = true;
             }
         }
@@ -133,12 +143,12 @@ public class StreamingMusic {
     }
 
     public static void mostrarEstatisticas() { /* implementar */
-        if (Titulo.isEmpty()) {
+        if (musicas.isEmpty()) {
             System.out.println("Nenhuma música cadastrada.");
             return;
         }
-        int totalMusicas = Titulo.size();
-        int duracaoTotal = Duracao.stream().mapToInt(Integer::intValue).sum();
+        int totalMusicas = musicas.size();
+        int duracaoTotal = musicas.stream().mapToInt(m -> m.duracao).sum();
         double duracaoMedia = (double) duracaoTotal / totalMusicas;
         System.out.printf("Total de músicas: %d%n", totalMusicas);
         System.out.printf("Duração total: %d segundos%n", duracaoTotal);
