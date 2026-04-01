@@ -1,0 +1,6 @@
+# Claude Code
+.claude/
+.idea
+# Java
+*.class
+*.jar
