@@ -1,6 +1,9 @@
 # Claude Code
 .claude/
 .idea
+out
 # Java
 *.class
 *.jar
+.gitignore
+RULES.md
